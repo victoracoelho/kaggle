@@ -1,0 +1,1452 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas as pd\n",
+    "import numpy as np\n",
+    "import matplotlib.pyplot as plt\n",
+    "%matplotlib inline\n",
+    "from category_encoders.one_hot import OneHotEncoder"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "treino = pd.read_csv('C:/Users/vitin/Downloads/train.csv')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 165,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "teste = pd.read_csv('C:/Users/vitin/Downloads/test.csv')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 168,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "for pos in lista_aplicar:\n",
+    "    teste[pos] = treino[pos]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 170,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "<class 'pandas.core.frame.DataFrame'>\n",
+      "RangeIndex: 1459 entries, 0 to 1458\n",
+      "Data columns (total 80 columns):\n",
+      "Id               1459 non-null int64\n",
+      "MSSubClass       1459 non-null int64\n",
+      "MSZoning         1455 non-null object\n",
+      "LotFrontage      1232 non-null float64\n",
+      "LotArea          1459 non-null int64\n",
+      "Street           1459 non-null object\n",
+      "Alley            107 non-null object\n",
+      "LotShape         1459 non-null object\n",
+      "LandContour      1459 non-null object\n",
+      "Utilities        1457 non-null object\n",
+      "LotConfig        1459 non-null object\n",
+      "LandSlope        1459 non-null object\n",
+      "Neighborhood     1459 non-null object\n",
+      "Condition1       1459 non-null object\n",
+      "Condition2       1459 non-null object\n",
+      "BldgType         1459 non-null object\n",
+      "HouseStyle       1459 non-null object\n",
+      "OverallQual      1459 non-null int64\n",
+      "OverallCond      1459 non-null int64\n",
+      "YearBuilt        1459 non-null int64\n",
+      "YearRemodAdd     1459 non-null int64\n",
+      "RoofStyle        1459 non-null object\n",
+      "RoofMatl         1459 non-null object\n",
+      "Exterior1st      1458 non-null object\n",
+      "Exterior2nd      1458 non-null object\n",
+      "MasVnrType       1443 non-null object\n",
+      "MasVnrArea       1444 non-null float64\n",
+      "ExterQual        1459 non-null object\n",
+      "ExterCond        1459 non-null object\n",
+      "Foundation       1459 non-null object\n",
+      "BsmtQual         1415 non-null object\n",
+      "BsmtCond         1414 non-null object\n",
+      "BsmtExposure     1415 non-null object\n",
+      "BsmtFinType1     1417 non-null object\n",
+      "BsmtFinSF1       1459 non-null int64\n",
+      "BsmtFinType2     1417 non-null object\n",
+      "BsmtFinSF2       1459 non-null int64\n",
+      "BsmtUnfSF        1459 non-null int64\n",
+      "TotalBsmtSF      1459 non-null int64\n",
+      "Heating          1459 non-null object\n",
+      "HeatingQC        1459 non-null object\n",
+      "CentralAir       1459 non-null object\n",
+      "Electrical       1459 non-null object\n",
+      "1stFlrSF         1459 non-null int64\n",
+      "2ndFlrSF         1459 non-null int64\n",
+      "LowQualFinSF     1459 non-null int64\n",
+      "GrLivArea        1459 non-null int64\n",
+      "BsmtFullBath     1459 non-null int64\n",
+      "BsmtHalfBath     1459 non-null int64\n",
+      "FullBath         1459 non-null int64\n",
+      "HalfBath         1459 non-null int64\n",
+      "BedroomAbvGr     1459 non-null int64\n",
+      "KitchenAbvGr     1459 non-null int64\n",
+      "KitchenQual      1458 non-null object\n",
+      "TotRmsAbvGrd     1459 non-null int64\n",
+      "Functional       1457 non-null object\n",
+      "Fireplaces       1459 non-null int64\n",
+      "FireplaceQu      729 non-null object\n",
+      "GarageType       1383 non-null object\n",
+      "GarageYrBlt      1381 non-null float64\n",
+      "GarageFinish     1381 non-null object\n",
+      "GarageCars       1459 non-null int64\n",
+      "GarageArea       1459 non-null int64\n",
+      "GarageQual       1381 non-null object\n",
+      "GarageCond       1381 non-null object\n",
+      "PavedDrive       1459 non-null object\n",
+      "WoodDeckSF       1459 non-null int64\n",
+      "OpenPorchSF      1459 non-null int64\n",
+      "EnclosedPorch    1459 non-null int64\n",
+      "3SsnPorch        1459 non-null int64\n",
+      "ScreenPorch      1459 non-null int64\n",
+      "PoolArea         1459 non-null int64\n",
+      "PoolQC           3 non-null object\n",
+      "Fence            290 non-null object\n",
+      "MiscFeature      51 non-null object\n",
+      "MiscVal          1459 non-null int64\n",
+      "MoSold           1459 non-null int64\n",
+      "YrSold           1459 non-null int64\n",
+      "SaleType         1458 non-null object\n",
+      "SaleCondition    1459 non-null object\n",
+      "dtypes: float64(3), int64(34), object(43)\n",
+      "memory usage: 912.0+ KB\n"
+     ]
+    }
+   ],
+   "source": [
+    "teste.info()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "categ_teste = ['object']"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "categ = teste.select_dtypes(include=categ_teste)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Index(['MSZoning', 'Street', 'Alley', 'LotShape', 'LandContour', 'Utilities',\n",
+       "       'LotConfig', 'LandSlope', 'Neighborhood', 'Condition1', 'Condition2',\n",
+       "       'BldgType', 'HouseStyle', 'RoofStyle', 'RoofMatl', 'Exterior1st',\n",
+       "       'Exterior2nd', 'MasVnrType', 'ExterQual', 'ExterCond', 'Foundation',\n",
+       "       'BsmtQual', 'BsmtCond', 'BsmtExposure', 'BsmtFinType1', 'BsmtFinType2',\n",
+       "       'Heating', 'HeatingQC', 'CentralAir', 'Electrical', 'KitchenQual',\n",
+       "       'Functional', 'FireplaceQu', 'GarageType', 'GarageFinish', 'GarageQual',\n",
+       "       'GarageCond', 'PavedDrive', 'PoolQC', 'Fence', 'MiscFeature',\n",
+       "       'SaleType', 'SaleCondition'],\n",
+       "      dtype='object')"
+      ]
+     },
+     "execution_count": 16,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "categ.columns"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 63,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "encoder = OneHotEncoder(cols = ['MSZoning', 'Street', 'Alley', 'LotShape', 'LandContour', 'Utilities',\n",
+    "       'LotConfig', 'LandSlope', 'Neighborhood', 'Condition1', 'Condition2',\n",
+    "       'BldgType', 'HouseStyle', 'RoofStyle', 'RoofMatl', 'Exterior1st',\n",
+    "       'Exterior2nd', 'MasVnrType', 'ExterQual', 'ExterCond', 'Foundation',\n",
+    "       'BsmtQual', 'BsmtCond', 'BsmtExposure', 'BsmtFinType1', 'BsmtFinType2',\n",
+    "       'Heating', 'HeatingQC', 'CentralAir', 'Electrical', 'KitchenQual',\n",
+    "       'Functional', 'FireplaceQu', 'GarageType', 'GarageFinish', 'GarageQual',\n",
+    "       'GarageCond', 'PavedDrive', 'PoolQC', 'Fence', 'MiscFeature',\n",
+    "       'SaleType', 'SaleCondition'], use_cat_names = True)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 171,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df_teste = encoder.fit_transform(teste)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 22,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "lista = list(df_teste.columns)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 51,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df_treino = treino.select_dtypes(include='int64')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 53,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "lista_treino = list(df_treino.columns)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 62,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "<class 'pandas.core.frame.DataFrame'>\n",
+      "RangeIndex: 1460 entries, 0 to 1459\n",
+      "Data columns (total 35 columns):\n",
+      "Id               1460 non-null int64\n",
+      "MSSubClass       1460 non-null int64\n",
+      "LotArea          1460 non-null int64\n",
+      "OverallQual      1460 non-null int64\n",
+      "OverallCond      1460 non-null int64\n",
+      "YearBuilt        1460 non-null int64\n",
+      "YearRemodAdd     1460 non-null int64\n",
+      "BsmtFinSF1       1460 non-null int64\n",
+      "BsmtFinSF2       1460 non-null int64\n",
+      "BsmtUnfSF        1460 non-null int64\n",
+      "TotalBsmtSF      1460 non-null int64\n",
+      "1stFlrSF         1460 non-null int64\n",
+      "2ndFlrSF         1460 non-null int64\n",
+      "LowQualFinSF     1460 non-null int64\n",
+      "GrLivArea        1460 non-null int64\n",
+      "BsmtFullBath     1460 non-null int64\n",
+      "BsmtHalfBath     1460 non-null int64\n",
+      "FullBath         1460 non-null int64\n",
+      "HalfBath         1460 non-null int64\n",
+      "BedroomAbvGr     1460 non-null int64\n",
+      "KitchenAbvGr     1460 non-null int64\n",
+      "TotRmsAbvGrd     1460 non-null int64\n",
+      "Fireplaces       1460 non-null int64\n",
+      "GarageCars       1460 non-null int64\n",
+      "GarageArea       1460 non-null int64\n",
+      "WoodDeckSF       1460 non-null int64\n",
+      "OpenPorchSF      1460 non-null int64\n",
+      "EnclosedPorch    1460 non-null int64\n",
+      "3SsnPorch        1460 non-null int64\n",
+      "ScreenPorch      1460 non-null int64\n",
+      "PoolArea         1460 non-null int64\n",
+      "MiscVal          1460 non-null int64\n",
+      "MoSold           1460 non-null int64\n",
+      "YrSold           1460 non-null int64\n",
+      "SalePrice        1460 non-null int64\n",
+      "dtypes: int64(35)\n",
+      "memory usage: 399.3 KB\n"
+     ]
+    }
+   ],
+   "source": [
+    "df_treino.info()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 172,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df_treino = encoder.fit_transform(treino)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 174,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "dtypes = ['int64']\n",
+    "df_treino = df_treino.select_dtypes(include=dtypes)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 173,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "<bound method DataFrame.info of       MSSubClass  MSZoning_RH  MSZoning_RL  MSZoning_RM  MSZoning_FV  \\\n",
+       "0             60            0            1            0            0   \n",
+       "1             20            0            1            0            0   \n",
+       "2             60            0            1            0            0   \n",
+       "3             70            0            1            0            0   \n",
+       "4             60            0            1            0            0   \n",
+       "...          ...          ...          ...          ...          ...   \n",
+       "1455          60            0            1            0            0   \n",
+       "1456          20            0            1            0            0   \n",
+       "1457          70            0            1            0            0   \n",
+       "1458          20            0            1            0            0   \n",
+       "1459          20            0            1            0            0   \n",
+       "\n",
+       "      MSZoning_C (all)  LotArea  Street_Pave  Street_Grvl  Alley_Pave  ...  \\\n",
+       "0                    0     8450            1            0           0  ...   \n",
+       "1                    0     9600            1            0           0  ...   \n",
+       "2                    0    11250            1            0           0  ...   \n",
+       "3                    0     9550            1            0           0  ...   \n",
+       "4                    0    14260            1            0           0  ...   \n",
+       "...                ...      ...          ...          ...         ...  ...   \n",
+       "1455                 0     7917            1            0           0  ...   \n",
+       "1456                 0    13175            1            0           0  ...   \n",
+       "1457                 0     9042            1            0           0  ...   \n",
+       "1458                 0     9717            1            0           0  ...   \n",
+       "1459                 0     9937            1            0           0  ...   \n",
+       "\n",
+       "      SaleType_Con  SaleType_ConLw  SaleType_ConLI  SaleType_CWD  \\\n",
+       "0                0               0               0             0   \n",
+       "1                0               0               0             0   \n",
+       "2                0               0               0             0   \n",
+       "3                0               0               0             0   \n",
+       "4                0               0               0             0   \n",
+       "...            ...             ...             ...           ...   \n",
+       "1455             0               0               0             0   \n",
+       "1456             0               0               0             0   \n",
+       "1457             0               0               0             0   \n",
+       "1458             0               0               0             0   \n",
+       "1459             0               0               0             0   \n",
+       "\n",
+       "      SaleCondition_Normal  SaleCondition_Partial  SaleCondition_Abnorml  \\\n",
+       "0                        1                      0                      0   \n",
+       "1                        1                      0                      0   \n",
+       "2                        1                      0                      0   \n",
+       "3                        0                      0                      1   \n",
+       "4                        1                      0                      0   \n",
+       "...                    ...                    ...                    ...   \n",
+       "1455                     1                      0                      0   \n",
+       "1456                     1                      0                      0   \n",
+       "1457                     1                      0                      0   \n",
+       "1458                     1                      0                      0   \n",
+       "1459                     1                      0                      0   \n",
+       "\n",
+       "      SaleCondition_Family  SaleCondition_Alloca  SaleCondition_AdjLand  \n",
+       "0                        0                     0                      0  \n",
+       "1                        0                     0                      0  \n",
+       "2                        0                     0                      0  \n",
+       "3                        0                     0                      0  \n",
+       "4                        0                     0                      0  \n",
+       "...                    ...                   ...                    ...  \n",
+       "1455                     0                     0                      0  \n",
+       "1456                     0                     0                      0  \n",
+       "1457                     0                     0                      0  \n",
+       "1458                     0                     0                      0  \n",
+       "1459                     0                     0                      0  \n",
+       "\n",
+       "[1460 rows x 261 columns]>"
+      ]
+     },
+     "execution_count": 173,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "X.info"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 176,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "lista = list(df_teste.columns)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 177,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "['Id',\n",
+       " 'MSSubClass',\n",
+       " 'MSZoning_RH',\n",
+       " 'MSZoning_RL',\n",
+       " 'MSZoning_RM',\n",
+       " 'MSZoning_FV',\n",
+       " 'MSZoning_C (all)',\n",
+       " 'MSZoning_nan',\n",
+       " 'LotFrontage',\n",
+       " 'LotArea',\n",
+       " 'Street_Pave',\n",
+       " 'Street_Grvl',\n",
+       " 'Alley_nan',\n",
+       " 'Alley_Pave',\n",
+       " 'Alley_Grvl',\n",
+       " 'LotShape_Reg',\n",
+       " 'LotShape_IR1',\n",
+       " 'LotShape_IR2',\n",
+       " 'LotShape_IR3',\n",
+       " 'LandContour_Lvl',\n",
+       " 'LandContour_HLS',\n",
+       " 'LandContour_Bnk',\n",
+       " 'LandContour_Low',\n",
+       " 'Utilities_AllPub',\n",
+       " 'Utilities_nan',\n",
+       " 'LotConfig_Inside',\n",
+       " 'LotConfig_Corner',\n",
+       " 'LotConfig_FR2',\n",
+       " 'LotConfig_CulDSac',\n",
+       " 'LotConfig_FR3',\n",
+       " 'LandSlope_Gtl',\n",
+       " 'LandSlope_Mod',\n",
+       " 'LandSlope_Sev',\n",
+       " 'Neighborhood_NAmes',\n",
+       " 'Neighborhood_Gilbert',\n",
+       " 'Neighborhood_StoneBr',\n",
+       " 'Neighborhood_BrDale',\n",
+       " 'Neighborhood_NPkVill',\n",
+       " 'Neighborhood_NridgHt',\n",
+       " 'Neighborhood_Blmngtn',\n",
+       " 'Neighborhood_NoRidge',\n",
+       " 'Neighborhood_Somerst',\n",
+       " 'Neighborhood_SawyerW',\n",
+       " 'Neighborhood_Sawyer',\n",
+       " 'Neighborhood_NWAmes',\n",
+       " 'Neighborhood_OldTown',\n",
+       " 'Neighborhood_BrkSide',\n",
+       " 'Neighborhood_ClearCr',\n",
+       " 'Neighborhood_SWISU',\n",
+       " 'Neighborhood_Edwards',\n",
+       " 'Neighborhood_CollgCr',\n",
+       " 'Neighborhood_Crawfor',\n",
+       " 'Neighborhood_Blueste',\n",
+       " 'Neighborhood_IDOTRR',\n",
+       " 'Neighborhood_Mitchel',\n",
+       " 'Neighborhood_Timber',\n",
+       " 'Neighborhood_MeadowV',\n",
+       " 'Neighborhood_Veenker',\n",
+       " 'Condition1_Feedr',\n",
+       " 'Condition1_Norm',\n",
+       " 'Condition1_PosN',\n",
+       " 'Condition1_RRNe',\n",
+       " 'Condition1_Artery',\n",
+       " 'Condition1_RRNn',\n",
+       " 'Condition1_PosA',\n",
+       " 'Condition1_RRAn',\n",
+       " 'Condition1_RRAe',\n",
+       " 'Condition2_Norm',\n",
+       " 'Condition2_Feedr',\n",
+       " 'Condition2_PosA',\n",
+       " 'Condition2_PosN',\n",
+       " 'Condition2_Artery',\n",
+       " 'BldgType_1Fam',\n",
+       " 'BldgType_TwnhsE',\n",
+       " 'BldgType_Twnhs',\n",
+       " 'BldgType_Duplex',\n",
+       " 'BldgType_2fmCon',\n",
+       " 'HouseStyle_1Story',\n",
+       " 'HouseStyle_2Story',\n",
+       " 'HouseStyle_SLvl',\n",
+       " 'HouseStyle_1.5Fin',\n",
+       " 'HouseStyle_SFoyer',\n",
+       " 'HouseStyle_2.5Unf',\n",
+       " 'HouseStyle_1.5Unf',\n",
+       " 'OverallQual',\n",
+       " 'OverallCond',\n",
+       " 'YearBuilt',\n",
+       " 'YearRemodAdd',\n",
+       " 'RoofStyle_Gable',\n",
+       " 'RoofStyle_Hip',\n",
+       " 'RoofStyle_Gambrel',\n",
+       " 'RoofStyle_Flat',\n",
+       " 'RoofStyle_Mansard',\n",
+       " 'RoofStyle_Shed',\n",
+       " 'RoofMatl_CompShg',\n",
+       " 'RoofMatl_Tar&Grv',\n",
+       " 'RoofMatl_WdShake',\n",
+       " 'RoofMatl_WdShngl',\n",
+       " 'Exterior1st_VinylSd',\n",
+       " 'Exterior1st_Wd Sdng',\n",
+       " 'Exterior1st_HdBoard',\n",
+       " 'Exterior1st_Plywood',\n",
+       " 'Exterior1st_MetalSd',\n",
+       " 'Exterior1st_CemntBd',\n",
+       " 'Exterior1st_WdShing',\n",
+       " 'Exterior1st_BrkFace',\n",
+       " 'Exterior1st_AsbShng',\n",
+       " 'Exterior1st_BrkComm',\n",
+       " 'Exterior1st_Stucco',\n",
+       " 'Exterior1st_AsphShn',\n",
+       " 'Exterior1st_nan',\n",
+       " 'Exterior1st_CBlock',\n",
+       " 'Exterior2nd_VinylSd',\n",
+       " 'Exterior2nd_Wd Sdng',\n",
+       " 'Exterior2nd_HdBoard',\n",
+       " 'Exterior2nd_Plywood',\n",
+       " 'Exterior2nd_MetalSd',\n",
+       " 'Exterior2nd_Brk Cmn',\n",
+       " 'Exterior2nd_CmentBd',\n",
+       " 'Exterior2nd_ImStucc',\n",
+       " 'Exterior2nd_Wd Shng',\n",
+       " 'Exterior2nd_AsbShng',\n",
+       " 'Exterior2nd_Stucco',\n",
+       " 'Exterior2nd_CBlock',\n",
+       " 'Exterior2nd_BrkFace',\n",
+       " 'Exterior2nd_AsphShn',\n",
+       " 'Exterior2nd_nan',\n",
+       " 'Exterior2nd_Stone',\n",
+       " 'MasVnrType_None',\n",
+       " 'MasVnrType_BrkFace',\n",
+       " 'MasVnrType_Stone',\n",
+       " 'MasVnrType_BrkCmn',\n",
+       " 'MasVnrType_nan',\n",
+       " 'MasVnrArea',\n",
+       " 'ExterQual_TA',\n",
+       " 'ExterQual_Gd',\n",
+       " 'ExterQual_Ex',\n",
+       " 'ExterQual_Fa',\n",
+       " 'ExterCond_TA',\n",
+       " 'ExterCond_Gd',\n",
+       " 'ExterCond_Fa',\n",
+       " 'ExterCond_Po',\n",
+       " 'ExterCond_Ex',\n",
+       " 'Foundation_CBlock',\n",
+       " 'Foundation_PConc',\n",
+       " 'Foundation_BrkTil',\n",
+       " 'Foundation_Stone',\n",
+       " 'Foundation_Slab',\n",
+       " 'Foundation_Wood',\n",
+       " 'BsmtQual_TA',\n",
+       " 'BsmtQual_Gd',\n",
+       " 'BsmtQual_Ex',\n",
+       " 'BsmtQual_Fa',\n",
+       " 'BsmtQual_nan',\n",
+       " 'BsmtCond_TA',\n",
+       " 'BsmtCond_Po',\n",
+       " 'BsmtCond_Fa',\n",
+       " 'BsmtCond_Gd',\n",
+       " 'BsmtCond_nan',\n",
+       " 'BsmtExposure_No',\n",
+       " 'BsmtExposure_Gd',\n",
+       " 'BsmtExposure_Mn',\n",
+       " 'BsmtExposure_Av',\n",
+       " 'BsmtExposure_nan',\n",
+       " 'BsmtFinType1_Rec',\n",
+       " 'BsmtFinType1_ALQ',\n",
+       " 'BsmtFinType1_GLQ',\n",
+       " 'BsmtFinType1_Unf',\n",
+       " 'BsmtFinType1_BLQ',\n",
+       " 'BsmtFinType1_LwQ',\n",
+       " 'BsmtFinType1_nan',\n",
+       " 'BsmtFinSF1',\n",
+       " 'BsmtFinType2_LwQ',\n",
+       " 'BsmtFinType2_Unf',\n",
+       " 'BsmtFinType2_Rec',\n",
+       " 'BsmtFinType2_BLQ',\n",
+       " 'BsmtFinType2_GLQ',\n",
+       " 'BsmtFinType2_ALQ',\n",
+       " 'BsmtFinType2_nan',\n",
+       " 'BsmtFinSF2',\n",
+       " 'BsmtUnfSF',\n",
+       " 'TotalBsmtSF',\n",
+       " 'Heating_GasA',\n",
+       " 'Heating_GasW',\n",
+       " 'Heating_Grav',\n",
+       " 'Heating_Wall',\n",
+       " 'HeatingQC_TA',\n",
+       " 'HeatingQC_Gd',\n",
+       " 'HeatingQC_Ex',\n",
+       " 'HeatingQC_Fa',\n",
+       " 'HeatingQC_Po',\n",
+       " 'CentralAir_Y',\n",
+       " 'CentralAir_N',\n",
+       " 'Electrical_SBrkr',\n",
+       " 'Electrical_FuseA',\n",
+       " 'Electrical_FuseF',\n",
+       " 'Electrical_FuseP',\n",
+       " '1stFlrSF',\n",
+       " '2ndFlrSF',\n",
+       " 'LowQualFinSF',\n",
+       " 'GrLivArea',\n",
+       " 'BsmtFullBath',\n",
+       " 'BsmtHalfBath',\n",
+       " 'FullBath',\n",
+       " 'HalfBath',\n",
+       " 'BedroomAbvGr',\n",
+       " 'KitchenAbvGr',\n",
+       " 'KitchenQual_TA',\n",
+       " 'KitchenQual_Gd',\n",
+       " 'KitchenQual_Ex',\n",
+       " 'KitchenQual_Fa',\n",
+       " 'KitchenQual_nan',\n",
+       " 'TotRmsAbvGrd',\n",
+       " 'Functional_Typ',\n",
+       " 'Functional_Min2',\n",
+       " 'Functional_Min1',\n",
+       " 'Functional_Mod',\n",
+       " 'Functional_Maj1',\n",
+       " 'Functional_Sev',\n",
+       " 'Functional_Maj2',\n",
+       " 'Functional_nan',\n",
+       " 'Fireplaces',\n",
+       " 'FireplaceQu_nan',\n",
+       " 'FireplaceQu_TA',\n",
+       " 'FireplaceQu_Gd',\n",
+       " 'FireplaceQu_Po',\n",
+       " 'FireplaceQu_Fa',\n",
+       " 'FireplaceQu_Ex',\n",
+       " 'GarageType_Attchd',\n",
+       " 'GarageType_Detchd',\n",
+       " 'GarageType_BuiltIn',\n",
+       " 'GarageType_nan',\n",
+       " 'GarageType_Basment',\n",
+       " 'GarageType_2Types',\n",
+       " 'GarageType_CarPort',\n",
+       " 'GarageYrBlt',\n",
+       " 'GarageFinish_Unf',\n",
+       " 'GarageFinish_Fin',\n",
+       " 'GarageFinish_RFn',\n",
+       " 'GarageFinish_nan',\n",
+       " 'GarageCars',\n",
+       " 'GarageArea',\n",
+       " 'GarageQual_TA',\n",
+       " 'GarageQual_nan',\n",
+       " 'GarageQual_Fa',\n",
+       " 'GarageQual_Gd',\n",
+       " 'GarageQual_Po',\n",
+       " 'GarageCond_TA',\n",
+       " 'GarageCond_nan',\n",
+       " 'GarageCond_Fa',\n",
+       " 'GarageCond_Gd',\n",
+       " 'GarageCond_Po',\n",
+       " 'GarageCond_Ex',\n",
+       " 'PavedDrive_Y',\n",
+       " 'PavedDrive_N',\n",
+       " 'PavedDrive_P',\n",
+       " 'WoodDeckSF',\n",
+       " 'OpenPorchSF',\n",
+       " 'EnclosedPorch',\n",
+       " '3SsnPorch',\n",
+       " 'ScreenPorch',\n",
+       " 'PoolArea',\n",
+       " 'PoolQC_nan',\n",
+       " 'PoolQC_Ex',\n",
+       " 'PoolQC_Gd',\n",
+       " 'Fence_MnPrv',\n",
+       " 'Fence_nan',\n",
+       " 'Fence_GdPrv',\n",
+       " 'Fence_GdWo',\n",
+       " 'Fence_MnWw',\n",
+       " 'MiscFeature_nan',\n",
+       " 'MiscFeature_Gar2',\n",
+       " 'MiscFeature_Shed',\n",
+       " 'MiscFeature_Othr',\n",
+       " 'MiscVal',\n",
+       " 'MoSold',\n",
+       " 'YrSold',\n",
+       " 'SaleType_WD',\n",
+       " 'SaleType_COD',\n",
+       " 'SaleType_New',\n",
+       " 'SaleType_ConLD',\n",
+       " 'SaleType_Oth',\n",
+       " 'SaleType_Con',\n",
+       " 'SaleType_ConLw',\n",
+       " 'SaleType_ConLI',\n",
+       " 'SaleType_CWD',\n",
+       " 'SaleType_nan',\n",
+       " 'SaleCondition_Normal',\n",
+       " 'SaleCondition_Partial',\n",
+       " 'SaleCondition_Abnorml',\n",
+       " 'SaleCondition_Family',\n",
+       " 'SaleCondition_Alloca',\n",
+       " 'SaleCondition_AdjLand']"
+      ]
+     },
+     "execution_count": 177,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "lista"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 179,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "X = df_treino[['MSSubClass',\n",
+    " 'MSZoning_RH',\n",
+    " 'MSZoning_RL',\n",
+    " 'MSZoning_RM',\n",
+    " 'MSZoning_FV',\n",
+    " 'MSZoning_C (all)',\n",
+    " 'LotArea',\n",
+    " 'Street_Pave',\n",
+    " 'Street_Grvl',\n",
+    " 'Alley_Pave',\n",
+    " 'Alley_Grvl',\n",
+    " 'LotShape_Reg',\n",
+    " 'LotShape_IR1',\n",
+    " 'LotShape_IR2',\n",
+    " 'LotShape_IR3',\n",
+    " 'LandContour_Lvl',\n",
+    " 'LandContour_HLS',\n",
+    " 'LandContour_Bnk',\n",
+    " 'LandContour_Low',\n",
+    " 'Utilities_AllPub',\n",
+    " 'LotConfig_Inside',\n",
+    " 'LotConfig_Corner',\n",
+    " 'LotConfig_FR2',\n",
+    " 'LotConfig_CulDSac',\n",
+    " 'LotConfig_FR3',\n",
+    " 'LandSlope_Gtl',\n",
+    " 'LandSlope_Mod',\n",
+    " 'LandSlope_Sev',\n",
+    " 'Neighborhood_NAmes',\n",
+    " 'Neighborhood_Gilbert',\n",
+    " 'Neighborhood_StoneBr',\n",
+    " 'Neighborhood_BrDale',\n",
+    " 'Neighborhood_NPkVill',\n",
+    " 'Neighborhood_NridgHt',\n",
+    " 'Neighborhood_Blmngtn',\n",
+    " 'Neighborhood_NoRidge',\n",
+    " 'Neighborhood_Somerst',\n",
+    " 'Neighborhood_SawyerW',\n",
+    " 'Neighborhood_Sawyer',\n",
+    " 'Neighborhood_NWAmes',\n",
+    " 'Neighborhood_OldTown',\n",
+    " 'Neighborhood_BrkSide',\n",
+    " 'Neighborhood_ClearCr',\n",
+    " 'Neighborhood_SWISU',\n",
+    " 'Neighborhood_Edwards',\n",
+    " 'Neighborhood_CollgCr',\n",
+    " 'Neighborhood_Crawfor',\n",
+    " 'Neighborhood_Blueste',\n",
+    " 'Neighborhood_IDOTRR',\n",
+    " 'Neighborhood_Mitchel',\n",
+    " 'Neighborhood_Timber',\n",
+    " 'Neighborhood_MeadowV',\n",
+    " 'Neighborhood_Veenker',\n",
+    " 'Condition1_Feedr',\n",
+    " 'Condition1_Norm',\n",
+    " 'Condition1_PosN',\n",
+    " 'Condition1_RRNe',\n",
+    " 'Condition1_Artery',\n",
+    " 'Condition1_RRNn',\n",
+    " 'Condition1_PosA',\n",
+    " 'Condition1_RRAn',\n",
+    " 'Condition1_RRAe',\n",
+    " 'Condition2_Norm',\n",
+    " 'Condition2_Feedr',\n",
+    " 'Condition2_PosA',\n",
+    " 'Condition2_PosN',\n",
+    " 'Condition2_Artery',\n",
+    " 'BldgType_1Fam',\n",
+    " 'BldgType_TwnhsE',\n",
+    " 'BldgType_Twnhs',\n",
+    " 'BldgType_Duplex',\n",
+    " 'BldgType_2fmCon',\n",
+    " 'HouseStyle_1Story',\n",
+    " 'HouseStyle_2Story',\n",
+    " 'HouseStyle_SLvl',\n",
+    " 'HouseStyle_1.5Fin',\n",
+    " 'HouseStyle_SFoyer',\n",
+    " 'HouseStyle_2.5Unf',\n",
+    " 'HouseStyle_1.5Unf',\n",
+    " 'OverallQual',\n",
+    " 'OverallCond',\n",
+    " 'YearBuilt',\n",
+    " 'YearRemodAdd',\n",
+    " 'RoofStyle_Gable',\n",
+    " 'RoofStyle_Hip',\n",
+    " 'RoofStyle_Gambrel',\n",
+    " 'RoofStyle_Flat',\n",
+    " 'RoofStyle_Mansard',\n",
+    " 'RoofStyle_Shed',\n",
+    " 'RoofMatl_CompShg',\n",
+    " 'RoofMatl_Tar&Grv',\n",
+    " 'RoofMatl_WdShake',\n",
+    " 'RoofMatl_WdShngl',\n",
+    " 'Exterior1st_VinylSd',\n",
+    " 'Exterior1st_Wd Sdng',\n",
+    " 'Exterior1st_HdBoard',\n",
+    " 'Exterior1st_Plywood',\n",
+    " 'Exterior1st_MetalSd',\n",
+    " 'Exterior1st_CemntBd',\n",
+    " 'Exterior1st_WdShing',\n",
+    " 'Exterior1st_BrkFace',\n",
+    " 'Exterior1st_AsbShng',\n",
+    " 'Exterior1st_BrkComm',\n",
+    " 'Exterior1st_Stucco',\n",
+    " 'Exterior1st_AsphShn',\n",
+    " 'Exterior1st_CBlock',\n",
+    " 'Exterior2nd_VinylSd',\n",
+    " 'Exterior2nd_Wd Sdng',\n",
+    " 'Exterior2nd_HdBoard',\n",
+    " 'Exterior2nd_Plywood',\n",
+    " 'Exterior2nd_MetalSd',\n",
+    " 'Exterior2nd_Brk Cmn',\n",
+    " 'Exterior2nd_CmentBd',\n",
+    " 'Exterior2nd_ImStucc',\n",
+    " 'Exterior2nd_Wd Shng',\n",
+    " 'Exterior2nd_AsbShng',\n",
+    " 'Exterior2nd_Stucco',\n",
+    " 'Exterior2nd_CBlock',\n",
+    " 'Exterior2nd_BrkFace',\n",
+    " 'Exterior2nd_AsphShn',\n",
+    " 'Exterior2nd_Stone',\n",
+    " 'MasVnrType_None',\n",
+    " 'MasVnrType_BrkFace',\n",
+    " 'MasVnrType_Stone',\n",
+    " 'MasVnrType_BrkCmn',\n",
+    " 'ExterQual_TA',\n",
+    " 'ExterQual_Gd',\n",
+    " 'ExterQual_Ex',\n",
+    " 'ExterQual_Fa',\n",
+    " 'ExterCond_TA',\n",
+    " 'ExterCond_Gd',\n",
+    " 'ExterCond_Fa',\n",
+    " 'ExterCond_Po',\n",
+    " 'ExterCond_Ex',\n",
+    " 'Foundation_CBlock',\n",
+    " 'Foundation_PConc',\n",
+    " 'Foundation_BrkTil',\n",
+    " 'Foundation_Stone',\n",
+    " 'Foundation_Slab',\n",
+    " 'Foundation_Wood',\n",
+    " 'BsmtQual_TA',\n",
+    " 'BsmtQual_Gd',\n",
+    " 'BsmtQual_Ex',\n",
+    " 'BsmtQual_Fa',\n",
+    " 'BsmtCond_TA',\n",
+    " 'BsmtCond_Po',\n",
+    " 'BsmtCond_Fa',\n",
+    " 'BsmtCond_Gd',\n",
+    " 'BsmtExposure_No',\n",
+    " 'BsmtExposure_Gd',\n",
+    " 'BsmtExposure_Mn',\n",
+    " 'BsmtExposure_Av',\n",
+    " 'BsmtFinType1_Rec',\n",
+    " 'BsmtFinType1_ALQ',\n",
+    " 'BsmtFinType1_GLQ',\n",
+    " 'BsmtFinType1_Unf',\n",
+    " 'BsmtFinType1_BLQ',\n",
+    " 'BsmtFinType1_LwQ',\n",
+    " 'BsmtFinSF1',\n",
+    " 'BsmtFinType2_LwQ',\n",
+    " 'BsmtFinType2_Unf',\n",
+    " 'BsmtFinType2_Rec',\n",
+    " 'BsmtFinType2_BLQ',\n",
+    " 'BsmtFinType2_GLQ',\n",
+    " 'BsmtFinType2_ALQ',\n",
+    " 'BsmtFinSF2',\n",
+    " 'BsmtUnfSF',\n",
+    " 'TotalBsmtSF',\n",
+    " 'Heating_GasA',\n",
+    " 'Heating_GasW',\n",
+    " 'Heating_Grav',\n",
+    " 'Heating_Wall',\n",
+    " 'HeatingQC_TA',\n",
+    " 'HeatingQC_Gd',\n",
+    " 'HeatingQC_Ex',\n",
+    " 'HeatingQC_Fa',\n",
+    " 'HeatingQC_Po',\n",
+    " 'CentralAir_Y',\n",
+    " 'CentralAir_N',\n",
+    " 'Electrical_SBrkr',\n",
+    " 'Electrical_FuseA',\n",
+    " 'Electrical_FuseF',\n",
+    " 'Electrical_FuseP',\n",
+    " '1stFlrSF',\n",
+    " '2ndFlrSF',\n",
+    " 'LowQualFinSF',\n",
+    " 'GrLivArea',\n",
+    " 'BsmtFullBath',\n",
+    " 'BsmtHalfBath',\n",
+    " 'FullBath',\n",
+    " 'HalfBath',\n",
+    " 'BedroomAbvGr',\n",
+    " 'KitchenAbvGr',\n",
+    " 'KitchenQual_TA',\n",
+    " 'KitchenQual_Gd',\n",
+    " 'KitchenQual_Ex',\n",
+    " 'KitchenQual_Fa',\n",
+    " 'TotRmsAbvGrd',\n",
+    " 'Functional_Typ',\n",
+    " 'Functional_Min2',\n",
+    " 'Functional_Min1',\n",
+    " 'Functional_Mod',\n",
+    " 'Functional_Maj1',\n",
+    " 'Functional_Sev',\n",
+    " 'Functional_Maj2',\n",
+    " 'Fireplaces',\n",
+    " 'FireplaceQu_TA',\n",
+    " 'FireplaceQu_Gd',\n",
+    " 'FireplaceQu_Po',\n",
+    " 'FireplaceQu_Fa',\n",
+    " 'FireplaceQu_Ex',\n",
+    " 'GarageType_Attchd',\n",
+    " 'GarageType_Detchd',\n",
+    " 'GarageType_BuiltIn',\n",
+    " 'GarageType_Basment',\n",
+    " 'GarageType_2Types',\n",
+    " 'GarageType_CarPort',\n",
+    " 'GarageFinish_Unf',\n",
+    " 'GarageFinish_Fin',\n",
+    " 'GarageFinish_RFn',\n",
+    " 'GarageCars',\n",
+    " 'GarageArea',\n",
+    " 'GarageQual_TA',\n",
+    " 'GarageQual_Fa',\n",
+    " 'GarageQual_Gd',\n",
+    " 'GarageQual_Po',\n",
+    " 'GarageCond_TA',\n",
+    " 'GarageCond_Fa',\n",
+    " 'GarageCond_Gd',\n",
+    " 'GarageCond_Po',\n",
+    " 'GarageCond_Ex',\n",
+    " 'PavedDrive_Y',\n",
+    " 'PavedDrive_N',\n",
+    " 'PavedDrive_P',\n",
+    " 'WoodDeckSF',\n",
+    " 'OpenPorchSF',\n",
+    " 'EnclosedPorch',\n",
+    " '3SsnPorch',\n",
+    " 'ScreenPorch',\n",
+    " 'PoolArea',\n",
+    " 'PoolQC_Ex',\n",
+    " 'PoolQC_Gd',\n",
+    " 'Fence_MnPrv',\n",
+    " 'Fence_GdPrv',\n",
+    " 'Fence_GdWo',\n",
+    " 'Fence_MnWw',\n",
+    " 'MiscFeature_Gar2',\n",
+    " 'MiscFeature_Shed',\n",
+    " 'MiscFeature_Othr',\n",
+    " 'MiscVal',\n",
+    " 'MoSold',\n",
+    " 'YrSold',\n",
+    " 'SaleType_WD',\n",
+    " 'SaleType_COD',\n",
+    " 'SaleType_New',\n",
+    " 'SaleType_ConLD',\n",
+    " 'SaleType_Oth',\n",
+    " 'SaleType_Con',\n",
+    " 'SaleType_ConLw',\n",
+    " 'SaleType_ConLI',\n",
+    " 'SaleType_CWD',\n",
+    " 'SaleCondition_Normal',\n",
+    " 'SaleCondition_Partial',\n",
+    " 'SaleCondition_Abnorml',\n",
+    " 'SaleCondition_Family',\n",
+    " 'SaleCondition_Alloca',\n",
+    " 'SaleCondition_AdjLand']]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 117,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "X = df_treino.drop('Id', axis=1)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 180,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "y = treino['SalePrice']"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 33,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from sklearn.model_selection import train_test_split"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 181,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "X_treino, X_teste, y_treino, y_teste = train_test_split(X, y, test_size=.30)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 45,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from sklearn.ensemble import GradientBoostingRegressor"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 182,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "gboost = GradientBoostingRegressor(n_estimators = 1000, loss = 'huber')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 183,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "GradientBoostingRegressor(alpha=0.9, criterion='friedman_mse', init=None,\n",
+       "                          learning_rate=0.1, loss='huber', max_depth=3,\n",
+       "                          max_features=None, max_leaf_nodes=None,\n",
+       "                          min_impurity_decrease=0.0, min_impurity_split=None,\n",
+       "                          min_samples_leaf=1, min_samples_split=2,\n",
+       "                          min_weight_fraction_leaf=0.0, n_estimators=1000,\n",
+       "                          n_iter_no_change=None, presort='auto',\n",
+       "                          random_state=None, subsample=1.0, tol=0.0001,\n",
+       "                          validation_fraction=0.1, verbose=0, warm_start=False)"
+      ]
+     },
+     "execution_count": 183,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "gboost.fit(X_treino, y_treino)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 184,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "pred_treino = gboost.predict(X_teste)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 185,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "<matplotlib.collections.PathCollection at 0x212307b5fc8>"
+      ]
+     },
+     "execution_count": 185,
+     "metadata": {},
+     "output_type": "execute_result"
+    },
+    {
+     "data": {
+      "image/png": "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\n",
+      "text/plain": [
+       "<Figure size 864x432 with 1 Axes>"
+      ]
+     },
+     "metadata": {
+      "needs_background": "light"
+     },
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "plt.figure(figsize=(12,6))\n",
+    "plt.scatter(y_teste, pred_treino)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 75,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from sklearn.metrics import mean_squared_log_error"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 186,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "0.12426823605678491"
+      ]
+     },
+     "execution_count": 186,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "np.sqrt(mean_squared_log_error(y_teste, pred_treino))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 187,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "modelo = gboost.fit(X, y)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 193,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df_teste = df_teste.select_dtypes(include=dtypes)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 194,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Index(['MSSubClass', 'MSZoning_RH', 'MSZoning_RL', 'MSZoning_RM',\n",
+       "       'MSZoning_FV', 'MSZoning_C (all)', 'LotArea', 'Street_Pave',\n",
+       "       'Street_Grvl', 'Alley_Pave',\n",
+       "       ...\n",
+       "       'SaleType_Con', 'SaleType_ConLw', 'SaleType_ConLI', 'SaleType_CWD',\n",
+       "       'SaleCondition_Normal', 'SaleCondition_Partial',\n",
+       "       'SaleCondition_Abnorml', 'SaleCondition_Family', 'SaleCondition_Alloca',\n",
+       "       'SaleCondition_AdjLand'],\n",
+       "      dtype='object', length=267)"
+      ]
+     },
+     "execution_count": 194,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df_teste.columns"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 196,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "p = modelo.predict(df_teste)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 197,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "sub = pd.Series(p, index=teste['Id'], name='SalePrice')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 198,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "sub.to_csv('modelo4.csv', header=True)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### MANIPULAÇÃO DE DADOS FALTANTES NA BASE DE TESTE ###"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 141,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "treino_novo = treino.select_dtypes(include=dtypes)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 143,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Index(['Id', 'MSSubClass', 'LotArea', 'OverallQual', 'OverallCond',\n",
+       "       'YearBuilt', 'YearRemodAdd', 'BsmtFinSF1', 'BsmtFinSF2', 'BsmtUnfSF',\n",
+       "       'TotalBsmtSF', '1stFlrSF', '2ndFlrSF', 'LowQualFinSF', 'GrLivArea',\n",
+       "       'BsmtFullBath', 'BsmtHalfBath', 'FullBath', 'HalfBath', 'BedroomAbvGr',\n",
+       "       'KitchenAbvGr', 'TotRmsAbvGrd', 'Fireplaces', 'GarageCars',\n",
+       "       'GarageArea', 'WoodDeckSF', 'OpenPorchSF', 'EnclosedPorch', '3SsnPorch',\n",
+       "       'ScreenPorch', 'PoolArea', 'MiscVal', 'MoSold', 'YrSold', 'SalePrice'],\n",
+       "      dtype='object')"
+      ]
+     },
+     "execution_count": 143,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "treino_novo.columns"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 144,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "teste_novo = teste.select_dtypes(include=dtypes)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 146,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Index(['Id', 'MSSubClass', 'LotArea', 'OverallQual', 'OverallCond',\n",
+       "       'YearBuilt', 'YearRemodAdd', '1stFlrSF', '2ndFlrSF', 'LowQualFinSF',\n",
+       "       'GrLivArea', 'FullBath', 'HalfBath', 'BedroomAbvGr', 'KitchenAbvGr',\n",
+       "       'TotRmsAbvGrd', 'Fireplaces', 'WoodDeckSF', 'OpenPorchSF',\n",
+       "       'EnclosedPorch', '3SsnPorch', 'ScreenPorch', 'PoolArea', 'MiscVal',\n",
+       "       'MoSold', 'YrSold'],\n",
+       "      dtype='object')"
+      ]
+     },
+     "execution_count": 146,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "teste_novo.columns"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 147,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "treino_novo = list(treino_novo)\n",
+    "teste_novo = list(teste_novo)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 154,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "lista_aplicar = ['BsmtFinSF1', 'BsmtFinSF2', 'BsmtUnfSF', 'TotalBsmtSF', 'BsmtFullBath', 'BsmtHalfBath',  'GarageCars',\n",
+    "       'GarageArea']"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 124,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 145,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 27,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 101,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 37,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 76,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 78,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 102,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 98,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.4"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}
